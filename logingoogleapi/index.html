@@ -3,20 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-signin-client_id" content="276744889725-r80jmlj1vnsgb55gfp0bk1g5hl6ip99e.apps.googleusercontent.com">
+    <meta name="google-signin-client_id" content="276744889725-r80jmlj1vnsgb55gfp0bk1g5hl6ip99e.apps.googleusercontent.com
+    ">
     <title>Document</title>
 </head>
 <body>
     <div class="g-signin2" data-onsuccess="onSignIn"></div>
     <a href="#" onclick="signOut();">Sign out</a>
-<script>
-  function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-  }
-</script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="recogerdatos.js"></script>
 </body>
