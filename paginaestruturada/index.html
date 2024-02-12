@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Página con Secciones</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 500px;
+            margin-bottom: 500px;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sección 1 -->
+<section id="seccion1">
+    <h1>Primera Sección</h1>
+    <!-- Contenido de la primera sección -->
+</section>
+
+<!-- Sección 2 -->
+<section id="seccion2">
+    <h1>Segunda Sección</h1>
+    <!-- Contenido de la segunda sección -->
+</section>
+
+<!-- Sección 3 -->
+<section id="seccion3">
+    <h1>Tercera Sección</h1>
+    <!-- Contenido de la tercera sección -->
+</section>
+
+<!-- Sección 4 -->
+<section id="seccion4">
+    <h1>Cuarta Sección</h1>
+    <!-- Contenido de la cuarta sección -->
+</section>
+
+<!-- Sección 5 -->
+<section id="seccion5">
+    <h1>Quinta Sección</h1>
+    <!-- Contenido de la quinta sección -->
+</section>
+
+<script>
+    window.addEventListener('scroll', function() {
+        var secciones = document.querySelectorAll('section');
+        var scrollPosicion = window.scrollY + window.innerHeight / 2;
+
+        secciones.forEach(function(seccion) {
+            var seccionTop = seccion.offsetTop;
+            var seccionBottom = seccionTop + seccion.offsetHeight;
+
+            if (scrollPosicion >= seccionTop && scrollPosicion <= seccionBottom) {
+                window.scrollTo(0, seccionTop);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
