@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drag and Drop</title>
+  <style>
+    #contenedor {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 200px;
+    }
+
+    .contenedor-arrastre {
+      width: 150px;
+      height: 100px;
+      background-color: lightblue;
+      text-align: center;
+      line-height: 100px;
+      cursor: pointer;
+    }
+
+    .area-soltar {
+      width: 150px;
+      height: 100px;
+      border: 2px dashed gray;
+      text-align: center;
+      line-height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div id="contenedor">
+    <div class="contenedor-arrastre" draggable="true">Arrastra esta imagen1</div>
+  </div>
+  <div id="contenedor">
+    <div class="area-soltar" draggable="true">Suelta la imagen aquí1</div>
+    <div class="area-soltar" draggable="true">Suelta la imagen aquí2</div>
+    <div class="area-soltar" draggable="true">Suelta la imagen aquí</div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const contenedoresArrastre = document.querySelectorAll(".contenedor-arrastre");
+      const areasSoltar = document.querySelectorAll(".area-soltar");
+
+      contenedoresArrastre.forEach(function(contenedorArrastre) {
+        contenedorArrastre.addEventListener("dragstart", function(event) {
+          event.dataTransfer.setData("text/plain", "Contenido arrastrado");
+        });
+      });
+
+      areasSoltar.forEach(function(areaSoltar) {
+        areaSoltar.addEventListener("dragover", function(event) {
+          event.preventDefault();
+        });
+
+        areaSoltar.addEventListener("drop", function(event) {
+          event.preventDefault();
+          const data = event.dataTransfer.getData("text/plain");
+          const imagenArrastrada = document.querySelector(".contenedor-arrastre");
+          areaSoltar.innerHTML = "";
+          areaSoltar.appendChild(imagenArrastrada.cloneNode(true));
+        });
+      });
+    });
+  </script>
+</body>
+</html>
