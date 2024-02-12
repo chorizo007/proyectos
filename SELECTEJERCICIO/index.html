@@ -1,24 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    <select id="select1" multiple>
-        <option>texto121</option>
-        <option>texto122</option>
-        <option>texto123</option>
-        <option>texto124</option>
-        <option>texto125</option>
-    </select>
-    <button id="1a2">de 1 a dos</button>
-    <button id="1a2todos">todos de 1 a 2</button>
-    <button id="2a1">de 2 a 1</button>
-    <button id="2a1todos">todos de 2 a 1</button>
-    <select id="select2" multiple>
-    </select>
+    <style>
+        .contenedor{
+            display: flex;
+            margin: 30px; 
+        }
+        .contenedor select{
+            padding: 3px; 
+        }
+        .contenedorbut{
+            display: flex;
+            flex-direction: column;
+            margin: 30px; 
+        }
+        
+    </style>
+  </head>
+  <body>
+    <div class="contenedor">
+        <select id="select1" multiple>
+            <option>texto121</option>
+            <option>texto122</option>
+            <option>texto123</option>
+            <option>texto124</option>
+            <option>texto125</option>
+          </select>
+          <div class="contenedorbut">
+            <button id="1a2"><img src="../arrow-24-16.png" /></button>
+            <button id="1a2todos"><img src="../right-16.png" /></button>
+            <button id="2a1"><img src="../arrow-110-16.png" /></button>
+            <button id="2a1todos"><img src="../arrow-96-16.png" /></button>
+          </div>
+          <select id="select2" multiple></select>
+    </div>
+    
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
