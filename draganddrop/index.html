@@ -1,70 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Drag and Drop</title>
-  <style>
-    #contenedor {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      height: 200px;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drag and Drop</title>
+    <style>
+      #contenedor1,
+      #contenedor2 {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 200px;
+      }
 
-    .contenedor-arrastre {
-      width: 150px;
-      height: 100px;
-      background-color: lightblue;
-      text-align: center;
-      line-height: 100px;
-      cursor: pointer;
-    }
+      .contenedor-arrastre {
+        width: 150px;
+        height: 100px;
+        background-color: lightblue;
+        text-align: center;
+        line-height: 100px;
+        cursor: pointer;
+      }
 
-    .area-soltar {
-      width: 150px;
-      height: 100px;
-      border: 2px dashed gray;
-      text-align: center;
-      line-height: 100px;
-    }
-  </style>
-</head>
-<body>
-  <div id="contenedor">
-    <div class="contenedor-arrastre" draggable="true">Arrastra esta imagen1</div>
-  </div>
-  <div id="contenedor">
-    <div class="area-soltar" draggable="true">Suelta la imagen aquí1</div>
-    <div class="area-soltar" draggable="true">Suelta la imagen aquí2</div>
-    <div class="area-soltar" draggable="true">Suelta la imagen aquí</div>
-  </div>
+      .area-soltar {
+        width: 150px;
+        height: 100px;
+        border: 2px dashed gray;
+        text-align: center;
+        line-height: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="contenedor1">
+      <div class="contenedor-arrastre" draggable="true">
+        Arrastra esta imagen1
+      </div>
+      <div class="contenedor-arrastre" draggable="true">
+        Arrastra esta imagen2
+      </div>
+      <div class="contenedor-arrastre" draggable="true">
+        Arrastra esta imagen3
+      </div>
+    </div>
+    <div id="contenedor2">
+      <div class="area-soltar" draggable="true">Suelta la imagen aquí1</div>
+      <div class="area-soltar" draggable="true">Suelta la imagen aquí2</div>
+      <div class="area-soltar" draggable="true">Suelta la imagen aquí3</div>
+    </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const contenedoresArrastre = document.querySelectorAll(".contenedor-arrastre");
-      const areasSoltar = document.querySelectorAll(".area-soltar");
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        let contenedor_preguntas = document.getElementById("contenedor1");
+        let contenedor_respuestas = document.getElementById("contenedor2");
+        async function cargardatos() {
+          var xhr = new XMLHttpRequest();
+          var url = "preguntas.php";
+          xhr.open("POST", url, true);
+          xhr.setRequestHeader("Content-Type", "application/json");
 
-      contenedoresArrastre.forEach(function(contenedorArrastre) {
-        contenedorArrastre.addEventListener("dragstart", function(event) {
-          event.dataTransfer.setData("text/plain", "Contenido arrastrado");
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+              if (xhr.status == 200) {
+                var datos = xhr.responseText;
+                console.log(datos);
+                var datosObj = JSON.parse(datos);
+                if (datos !== "error") {
+                  return datosObj;
+                } else {
+                  mensajeDiv.textContent = datos;
+                  mensajeDiv.style.color = "red";
+                }
+              } else {
+                console.error("Error:", xhr.statusText);
+              }
+            }
+          };
+
+          xhr.send();
+        }
+
+        const contenedoresArrastre = document.querySelectorAll(
+          ".contenedor-arrastre"
+        );
+        const areasSoltar = document.querySelectorAll(".area-soltar");
+        let elementoArrastrado = null;
+
+        contenedoresArrastre.forEach(function (contenedorArrastre) {
+          contenedorArrastre.addEventListener("dragstart", function (event) {
+            elementoArrastrado = event.target;
+            event.dataTransfer.setData("text/plain", "Contenido arrastrado");
+          });
+        });
+
+        areasSoltar.forEach(function (areaSoltar) {
+          areaSoltar.addEventListener("dragover", function (event) {
+            event.preventDefault();
+          });
+
+          areaSoltar.addEventListener("drop", function (event) {
+            event.preventDefault();
+            if (elementoArrastrado) {
+              areaSoltar.innerHTML = "";
+              //areaSoltar.appendChild(elementoArrastrado.cloneNode(true));
+              areaSoltar.appendChild(elementoArrastrado);
+              elementoArrastrado = null;
+            }
+          });
         });
       });
-
-      areasSoltar.forEach(function(areaSoltar) {
-        areaSoltar.addEventListener("dragover", function(event) {
-          event.preventDefault();
-        });
-
-        areaSoltar.addEventListener("drop", function(event) {
-          event.preventDefault();
-          const data = event.dataTransfer.getData("text/plain");
-          const imagenArrastrada = document.querySelector(".contenedor-arrastre");
-          areaSoltar.innerHTML = "";
-          areaSoltar.appendChild(imagenArrastrada.cloneNode(true));
-        });
-      });
-    });
-  </script>
-</body>
+    </script>
+  </body>
 </html>
