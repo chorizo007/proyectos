@@ -90,9 +90,9 @@
             areaSoltar.addEventListener("drop", function (event) {
               event.preventDefault();
               if (elementoArrastrado) {
-                areaSoltar.innerHTML = "";
                 //areaSoltar.appendChild(elementoArrastrado.cloneNode(true));
                 if (areaSoltar.id == elementoArrastrado.id) {
+                  areaSoltar.innerHTML = "";
                   areaSoltar.appendChild(elementoArrastrado);
                 } else {
                   alert("eligue bien, que es muy facil");
