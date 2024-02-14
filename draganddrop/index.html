@@ -68,6 +68,35 @@
           } catch (error) {
             console.error("Error:", error);
           }
+
+          const contenedoresArrastre = document.querySelectorAll(
+          ".contenedor-arrastre"
+        );
+        const areasSoltar = document.querySelectorAll(".area-soltar");
+        let elementoArrastrado = null;
+
+        contenedoresArrastre.forEach(function (contenedorArrastre) {
+          contenedorArrastre.addEventListener("dragstart", function (event) {
+            elementoArrastrado = event.target;
+            event.dataTransfer.setData("text/plain", "Contenido arrastrado");
+          });
+        });
+
+        areasSoltar.forEach(function (areaSoltar) {
+          areaSoltar.addEventListener("dragover", function (event) {
+            event.preventDefault();
+          });
+
+          areaSoltar.addEventListener("drop", function (event) {
+            event.preventDefault();
+            if (elementoArrastrado) {
+              areaSoltar.innerHTML = "";
+              //areaSoltar.appendChild(elementoArrastrado.cloneNode(true));
+              areaSoltar.appendChild(elementoArrastrado);
+              elementoArrastrado = null;
+            }
+          });
+        });
         }
 
         general();
@@ -135,34 +164,7 @@
           }
         }
 
-        const contenedoresArrastre = document.querySelectorAll(
-          ".contenedor-arrastre"
-        );
-        const areasSoltar = document.querySelectorAll(".area-soltar");
-        let elementoArrastrado = null;
 
-        contenedoresArrastre.forEach(function (contenedorArrastre) {
-          contenedorArrastre.addEventListener("dragstart", function (event) {
-            elementoArrastrado = event.target;
-            event.dataTransfer.setData("text/plain", "Contenido arrastrado");
-          });
-        });
-
-        areasSoltar.forEach(function (areaSoltar) {
-          areaSoltar.addEventListener("dragover", function (event) {
-            event.preventDefault();
-          });
-
-          areaSoltar.addEventListener("drop", function (event) {
-            event.preventDefault();
-            if (elementoArrastrado) {
-              areaSoltar.innerHTML = "";
-              //areaSoltar.appendChild(elementoArrastrado.cloneNode(true));
-              areaSoltar.appendChild(elementoArrastrado);
-              elementoArrastrado = null;
-            }
-          });
-        });
       });
     </script>
   </body>
