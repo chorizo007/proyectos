@@ -20,7 +20,7 @@ if ($result->num_rows > 0) {
     $cont = 0;
     while ($row = $result->fetch_assoc()) {
         $data['pregunta'] = $row['pregunta'];
-        $data['respuesta'] = $row['respuesta1'];
+        $data['respuesta'] = $row['respuesta'];
     }
 }
 

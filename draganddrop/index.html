@@ -32,22 +32,8 @@
     </style>
   </head>
   <body>
-    <div id="preguntas-div">
-      <div class="contenedor-arrastre" draggable="true">
-        Arrastra esta imagen1
-      </div>
-      <div class="contenedor-arrastre" draggable="true">
-        Arrastra esta imagen2
-      </div>
-      <div class="contenedor-arrastre" draggable="true">
-        Arrastra esta imagen3
-      </div>
-    </div>
-    <div id="respuestas-div">
-      <div class="area-soltar" draggable="true">Suelta la imagen aquí1</div>
-      <div class="area-soltar" draggable="true">Suelta la imagen aquí2</div>
-      <div class="area-soltar" draggable="true">Suelta la imagen aquí3</div>
-    </div>
+    <div id="preguntas-div"></div>
+    <div id="respuestas-div"></div>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -85,7 +71,6 @@
           generardatos(datos);
         }
         general();
-        
 
         let primera_pregunta = null;
         let primera_respuesta = null;
@@ -98,13 +83,13 @@
             if (primera_pregunta == null) {
               var pregunta = document.createElement("div");
               pregunta.className = "contenedor-arrastre";
-              pregunta.textContent = dato.titulo;
+              pregunta.textContent = dato.pregunta;
               pregunta.draggable = true;
               pregunta.id = parejas;
               overlayContent.appendChild(pregunta);
               var respuesta = document.createElement("div");
               respuesta.className = "area-soltar";
-              respuesta.textContent = dato.titulo;
+              respuesta.textContent = dato.respuesta;
               respuesta.draggable = true;
               respuesta.id = parejas;
               preguntasdiv.appendChild(pregunta);
@@ -114,13 +99,13 @@
             } else {
               var pregunta = document.createElement("div");
               pregunta.className = "contenedor-arrastre";
-              pregunta.textContent = dato.titulo;
+              pregunta.textContent = dato.pregunta;
               pregunta.draggable = true;
               pregunta.id = parejas;
               overlayContent.appendChild(pregunta);
               var respuesta = document.createElement("div");
               respuesta.className = "area-soltar";
-              respuesta.textContent = dato.titulo;
+              respuesta.textContent = dato.respuesta;
               respuesta.draggable = true;
               respuesta.id = parejas;
               overlayContent.appendChild(pregunta);
