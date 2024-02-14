@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Drag and Drop</title>
     <style>
-      #contenedor1,
-      #contenedor2 {
+      #preguntas-div,
+      #respuestas-div {
         display: flex;
         justify-content: space-around;
         align-items: center;
@@ -32,7 +32,7 @@
     </style>
   </head>
   <body>
-    <div id="contenedor1">
+    <div id="preguntas-div">
       <div class="contenedor-arrastre" draggable="true">
         Arrastra esta imagen1
       </div>
@@ -43,7 +43,7 @@
         Arrastra esta imagen3
       </div>
     </div>
-    <div id="contenedor2">
+    <div id="respuestas-div">
       <div class="area-soltar" draggable="true">Suelta la imagen aquí1</div>
       <div class="area-soltar" draggable="true">Suelta la imagen aquí2</div>
       <div class="area-soltar" draggable="true">Suelta la imagen aquí3</div>
@@ -78,6 +78,73 @@
           };
 
           xhr.send();
+        }
+
+        async function general() {
+          let datos = await cargardatos();
+          generardatos(datos);
+        }
+        general();
+        
+
+        let primera_pregunta = null;
+        let primera_respuesta = null;
+
+        let preguntasdiv = document.getElementById("preguntas-div");
+        let respuestasdiv = document.getElementById("respuestas-div");
+        function generardatos(datos) {
+          let parejas = 0;
+          for (let dato of datos) {
+            if (primera_pregunta == null) {
+              var pregunta = document.createElement("div");
+              pregunta.className = "contenedor-arrastre";
+              pregunta.textContent = dato.titulo;
+              pregunta.draggable = true;
+              pregunta.id = parejas;
+              overlayContent.appendChild(pregunta);
+              var respuesta = document.createElement("div");
+              respuesta.className = "area-soltar";
+              respuesta.textContent = dato.titulo;
+              respuesta.draggable = true;
+              respuesta.id = parejas;
+              preguntasdiv.appendChild(pregunta);
+              respuestasdiv.appendChild(pregunta);
+              primera_respuesta = respuesta;
+              primera_pregunta = pregunta;
+            } else {
+              var pregunta = document.createElement("div");
+              pregunta.className = "contenedor-arrastre";
+              pregunta.textContent = dato.titulo;
+              pregunta.draggable = true;
+              pregunta.id = parejas;
+              overlayContent.appendChild(pregunta);
+              var respuesta = document.createElement("div");
+              respuesta.className = "area-soltar";
+              respuesta.textContent = dato.titulo;
+              respuesta.draggable = true;
+              respuesta.id = parejas;
+              overlayContent.appendChild(pregunta);
+              let orientacion_pregunta = Math.round(Math.random());
+              if ((orientacion_pregunta = 0)) {
+                preguntasdiv.insertBefore(
+                  pregunta,
+                  primera_pregunta.nextSibling
+                );
+              } else {
+                preguntasdiv.insertBefore(pregunta, primera_pregunta);
+              }
+              let orientacion_respuesta = Math.round(Math.random());
+              if ((orientacion_respuesta = 0)) {
+                respuestasdiv.insertBefore(
+                  respuesta,
+                  primera_respuesta.nextSibling
+                );
+              } else {
+                respuestasdiv.insertBefore(respuesta, primera_respuesta);
+              }
+            }
+            parejas++;
+          }
         }
 
         const contenedoresArrastre = document.querySelectorAll(
