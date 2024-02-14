@@ -52,6 +52,7 @@
                 console.log(datos);
                 var datosObj = JSON.parse(datos);
                 if (datos !== "error") {
+                  console.log(datosObj);
                   return datosObj;
                 } else {
                   mensajeDiv.textContent = datos;
@@ -77,9 +78,10 @@
 
         let preguntasdiv = document.getElementById("preguntas-div");
         let respuestasdiv = document.getElementById("respuestas-div");
-        function generardatos(datos) {
+        async function generardatos(datos) {
           let parejas = 0;
-          for (let dato of datos) {
+          for (let key in datos) {
+            let dato = datos[key];
             if (primera_pregunta == null) {
               var pregunta = document.createElement("div");
               pregunta.className = "contenedor-arrastre";
