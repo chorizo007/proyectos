@@ -19,8 +19,10 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     $cont = 0;
     while ($row = $result->fetch_assoc()) {
-        $data['pregunta'] = $row['pregunta'];
-        $data['respuesta'] = $row['respuesta'];
+        $data[] = array(
+            'pregunta' => $row['pregunta'],
+            'respuesta' => $row['respuesta']
+        );
     }
 }
 
