@@ -40,37 +40,36 @@
         let contenedor_preguntas = document.getElementById("contenedor1");
         let contenedor_respuestas = document.getElementById("contenedor2");
         async function cargardatos() {
-          var xhr = new XMLHttpRequest();
-          var url = "preguntas.php";
-          xhr.open("POST", url, true);
-          xhr.setRequestHeader("Content-Type", "application/json");
+          return new Promise((resolve, reject) => {
+            var xhr = new XMLHttpRequest();
+            var url = "preguntas.php";
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
 
-          xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4) {
-              if (xhr.status == 200) {
-                var datos = xhr.responseText;
-                console.log(datos);
-                var datosObj = JSON.parse(datos);
-                if (datos !== "error") {
-                  console.log(datosObj);
-                  return datosObj;
+            xhr.onreadystatechange = function () {
+              if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                  var datos = JSON.parse(xhr.responseText);
+                  resolve(datos);
                 } else {
-                  mensajeDiv.textContent = datos;
-                  mensajeDiv.style.color = "red";
+                  reject(xhr.statusText);
                 }
-              } else {
-                console.error("Error:", xhr.statusText);
               }
-            }
-          };
+            };
 
-          xhr.send();
+            xhr.send();
+          });
         }
 
         async function general() {
-          let datos = await cargardatos();
-          generardatos(datos);
+          try {
+            let datos = await cargardatos();
+            generardatos(datos);
+          } catch (error) {
+            console.error("Error:", error);
+          }
         }
+
         general();
 
         let primera_pregunta = null;
@@ -78,26 +77,25 @@
 
         let preguntasdiv = document.getElementById("preguntas-div");
         let respuestasdiv = document.getElementById("respuestas-div");
+
         async function generardatos(datos) {
           let parejas = 0;
-          console.log("hola");
-          for (let key in datos) {
-            console.log("hola");
-            let dato = datos[key];
+          for (let dato of datos) {
             if (primera_pregunta == null) {
               var pregunta = document.createElement("div");
               pregunta.className = "contenedor-arrastre";
               pregunta.textContent = dato.pregunta;
               pregunta.draggable = true;
               pregunta.id = parejas;
-              overlayContent.appendChild(pregunta);
+              preguntasdiv.appendChild(pregunta);
+
               var respuesta = document.createElement("div");
               respuesta.className = "area-soltar";
               respuesta.textContent = dato.respuesta;
               respuesta.draggable = true;
               respuesta.id = parejas;
-              preguntasdiv.appendChild(pregunta);
-              respuestasdiv.appendChild(pregunta);
+              respuestasdiv.appendChild(respuesta);
+
               primera_respuesta = respuesta;
               primera_pregunta = pregunta;
             } else {
@@ -106,15 +104,15 @@
               pregunta.textContent = dato.pregunta;
               pregunta.draggable = true;
               pregunta.id = parejas;
-              overlayContent.appendChild(pregunta);
+
               var respuesta = document.createElement("div");
               respuesta.className = "area-soltar";
               respuesta.textContent = dato.respuesta;
               respuesta.draggable = true;
               respuesta.id = parejas;
-              overlayContent.appendChild(pregunta);
+
               let orientacion_pregunta = Math.round(Math.random());
-              if ((orientacion_pregunta = 0)) {
+              if (orientacion_pregunta === 0) {
                 preguntasdiv.insertBefore(
                   pregunta,
                   primera_pregunta.nextSibling
@@ -122,8 +120,9 @@
               } else {
                 preguntasdiv.insertBefore(pregunta, primera_pregunta);
               }
+
               let orientacion_respuesta = Math.round(Math.random());
-              if ((orientacion_respuesta = 0)) {
+              if (orientacion_respuesta === 0) {
                 respuestasdiv.insertBefore(
                   respuesta,
                   primera_respuesta.nextSibling
