@@ -94,6 +94,10 @@
                 if (areaSoltar.id == elementoArrastrado.id) {
                   areaSoltar.innerHTML = "";
                   areaSoltar.appendChild(elementoArrastrado);
+                  cuentas++;
+                  if(cuentas=parejas){
+                    alert("has acertado todas!!");
+                  }
                 } else {
                   alert("eligue bien, que es muy facil");
                 }
@@ -110,9 +114,10 @@
 
         let preguntasdiv = document.getElementById("preguntas-div");
         let respuestasdiv = document.getElementById("respuestas-div");
+        let cuentas = 0;
+        let parejas = 0;
 
-        async function generardatos(datos) {
-          let parejas = 0;
+        async function generardatos(datos) {  
           for (let dato of datos) {
             if (primera_pregunta == null) {
               var pregunta = document.createElement("div");
