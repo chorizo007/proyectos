@@ -1,0 +1,36 @@
+GET http://localhost:3000/products?page=12&libro=lalala
+
+###
+GET http://localhost:3000/products/new
+
+###
+POST http://localhost:3000/products/create
+Content-Type: application/json
+
+{
+    "name":"ordenador 77",
+    "prize" : 120,
+    "stock" : 2,
+    "available" : true
+}
+
+###
+GET  http://localhost:3000/products/12341234
+
+###
+
+GET http://localhost:3000/users
+    º
+###
+GET http://localhost:3000/users/edit
+
+###
+POST http://localhost:3000/users/update
+
+
+###
+
+
+GET /users
+GET /users/edit
+POST /users/update
