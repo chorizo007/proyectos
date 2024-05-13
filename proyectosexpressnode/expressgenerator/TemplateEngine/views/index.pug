@@ -1,5 +1,29 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  div 
+    p contendio del parrafo 
+
+  div
+    a(href="http://www.gougle.com") google.com 
+    a#enlace.principal(href="http://www.you") youtube 
+
+  div
+    p #{nombre}
+
+  div 
+    if available 
+      p Esta disponible 
+    else 
+      p no esta disponible
+  div 
+    ul
+      - for(let i = 0 ; animales.length > i ; i++)
+        li= animales[i]
+  div
+    -animales = []
+    ul 
+      each animal in animales
+        li animal : #{animal}
+      else 
+        li no hay animales
